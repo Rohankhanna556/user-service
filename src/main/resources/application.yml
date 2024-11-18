@@ -1,0 +1,22 @@
+server:
+  port: 9000
+  shutdown: graceful
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://${db.host:localhost}:${db.port:5432}/${db.database:rohanai}
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+    generate-ddl: true

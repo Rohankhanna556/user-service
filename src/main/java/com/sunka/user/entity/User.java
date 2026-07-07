@@ -22,13 +22,18 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
+    @Column(name = "password")
     private String password;
+    
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "role")
     private String role; // e.g. "USER", "ADMIN"
 }

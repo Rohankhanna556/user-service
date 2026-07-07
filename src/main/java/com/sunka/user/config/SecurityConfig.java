@@ -28,6 +28,8 @@ public class SecurityConfig {
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers(
 	                "/api/auth/**",
+	                "/api/users/register",
+	                "/api/users/validate",
 	                "/swagger-ui.html",
 	                "/swagger-ui/**",
 	                "/v3/api-docs/**",
@@ -40,5 +42,4 @@ public class SecurityConfig {
 	
 	    return http.build();
 	}
-
 }

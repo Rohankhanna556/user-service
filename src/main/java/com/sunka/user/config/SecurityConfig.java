@@ -23,23 +23,28 @@ public class SecurityConfig {
     }
 
     @Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http.csrf(csrf -> csrf.disable())
-	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers(
-	                "/api/auth/**",
-	                "/api/users/register",
-	                "/api/users/validate",
-	                "/swagger-ui.html",
-	                "/swagger-ui/**",
-	                "/v3/api-docs/**",
-	                "/api-docs/**"
-	            ).permitAll()
-	            .anyRequest().authenticated()
-	        )
-	        .httpBasic(httpBasic -> httpBasic.disable())
-	        .formLogin(formLogin -> formLogin.disable());
-	
-	    return http.build();
-	}
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    // Swagger + OpenAPI docs
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/api-docs/**",
+
+                    // User service register + validate endpoints
+                    "/api/users/register",
+                    "/api/users/exists",
+
+                    // Auth service endpoints (if routed through gateway)
+                    "/api/auth/**"
+                ).permitAll()
+                .anyRequest().authenticated()
+            )
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .formLogin(formLogin -> formLogin.disable());
+
+        return http.build();
+    }
 }

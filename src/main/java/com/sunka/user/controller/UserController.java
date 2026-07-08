@@ -2,6 +2,7 @@ package com.sunka.user.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,13 @@ public class UserController {
     public boolean validateUser(@RequestParam("username") String username, @RequestParam("password") String password) {
         return userService.validateUser(username, password);
     }
+    
+    @GetMapping("/exists")
+    public ResponseEntity<Boolean> userExists(@RequestParam("email") String email) {
+        boolean exists = userService.findByEmailIgnoreCase(email);
+        return ResponseEntity.ok(exists);
+    }
+
 
     @GetMapping
     public List<UserModel> getAllUsers() {

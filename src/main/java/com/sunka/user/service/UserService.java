@@ -82,4 +82,9 @@ public class UserService {
                 .role(user.getRole())
                 .build();
     }
+
+	public boolean findByEmailIgnoreCase(String email) {
+		// TODO Auto-generated method stub
+		return userRepository.existsByEmailIgnoreCase(email);
+	}
 }

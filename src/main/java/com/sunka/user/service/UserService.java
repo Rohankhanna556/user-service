@@ -1,23 +1,29 @@
 package com.sunka.user.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunka.user.entity.User;
 import com.sunka.user.model.UserModel;
 import com.sunka.user.repo.UserRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ObjectMapper objectMapper;
 
-    public UserService(UserRepository repo, PasswordEncoder encoder) {
+    public UserService(UserRepository repo, PasswordEncoder encoder,
+    		ObjectMapper objectMapper) {
         this.userRepository = repo;
         this.passwordEncoder = encoder;
+        this.objectMapper = objectMapper;
     }
 
     // Register new user
@@ -36,7 +42,7 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElse(null);
         return user != null && passwordEncoder.matches(password, user.getPassword());    
     }
-
+    
     // Get all users
     public List<UserModel> getAllUsers() {
         return userRepository.findAll()
@@ -83,8 +89,19 @@ public class UserService {
                 .build();
     }
 
-	public boolean findByEmailIgnoreCase(String email) {
-		// TODO Auto-generated method stub
-		return userRepository.existsByEmailIgnoreCase(email);
+	public Map<String, Object> findByEmail(String email) {
+		 return userRepository.findByEmailIgnoreCase(email)
+                .map(user -> objectMapper.convertValue(user, new TypeReference<Map<String, Object>>() {}))
+                .orElse(null);
+    }
+	
+	public Map<String, Object> findByUsername(String username) {
+		 return userRepository.findByUsername(username)
+               .map(user -> objectMapper.convertValue(user, new TypeReference<Map<String, Object>>() {}))
+               .orElse(null);
+   }
+
+	public boolean existsByUsernameIgnoreCase(String username) {
+		return userRepository.existsByUsernameIgnoreCase(username);
 	}
 }

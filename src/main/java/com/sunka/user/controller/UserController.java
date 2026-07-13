@@ -1,6 +1,7 @@
 package com.sunka.user.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,9 +38,19 @@ public class UserController {
     }
     
     @GetMapping("/exists")
-    public ResponseEntity<Boolean> userExists(@RequestParam("email") String email) {
-        boolean exists = userService.findByEmailIgnoreCase(email);
+    public ResponseEntity<Boolean> userExists(@RequestParam("username") String username) {
+        boolean exists = userService.existsByUsernameIgnoreCase(username);
         return ResponseEntity.ok(exists);
+    }
+    
+    @GetMapping("/find-by-email")
+    public ResponseEntity<Map<String, Object>> findByEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(userService.findByEmail(email));
+    }
+    
+    @GetMapping("/find-by-username")
+    public ResponseEntity<Map<String, Object>> findByUsername(@RequestParam("username") String username) {
+        return ResponseEntity.ok(userService.findByUsername(username));
     }
 
 

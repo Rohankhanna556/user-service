@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "schema-users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,7 +31,7 @@ public class User {
     @Column(name = "password")
     private String password;
     
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "role")

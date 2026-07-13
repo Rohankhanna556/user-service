@@ -6,9 +6,9 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://ep-gentle-sea-atcbvk78.c-9.us-east-1.aws.neon.tech/neondb
+    username: neondb_owner
+    password: npg_6KL3jmnBROlY
     driver-class-name: org.postgresql.Driver
 
   jpa:

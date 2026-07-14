@@ -43,6 +43,10 @@ public class UserService {
         return user != null && passwordEncoder.matches(password, user.getPassword());    
     }
     
+    public boolean existsUserByEmail(String email) {
+        return userRepository.existsByEmailIgnoreCase(email);
+    }
+    
     // Get all users
     public List<UserModel> getAllUsers() {
         return userRepository.findAll()

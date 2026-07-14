@@ -43,6 +43,12 @@ public class UserController {
         return ResponseEntity.ok(exists);
     }
     
+    @GetMapping("/exists-by-email")
+    public ResponseEntity<Boolean> userExistsByEmail(@RequestParam("email") String email) {
+        boolean exists = userService.existsUserByEmail(email);
+        return ResponseEntity.ok(exists);
+    }
+    
     @GetMapping("/find-by-email")
     public ResponseEntity<Map<String, Object>> findByEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(userService.findByEmail(email));

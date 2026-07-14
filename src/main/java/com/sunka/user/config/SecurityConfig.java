@@ -36,6 +36,7 @@ public class SecurityConfig {
                     // User service register + validate endpoints
                     "/api/users/register",
                     "/api/users/exists",
+                    "/api/users/exists-by-email",
                     "/api/users/find-by-email",
                     "/api/users/find-by-username",
 
